@@ -3,6 +3,7 @@ import express from "express";
 
 // Import the index routes module
 import indexRoutes from "./routes/index.js";
+import usersRoutes from "./routes/users.js";
 
 // Create an Express application
 const app = express();
@@ -12,6 +13,7 @@ const PORT = process.env.PORT || 3000;
 
 // Use the routes module
 app.use("/", indexRoutes);
+app.use("/users", usersRoutes);
 
 // Start the server on port 3000
 app.listen(PORT, () => {
