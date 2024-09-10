@@ -9,7 +9,7 @@ const getUser = (req, res) => {
 // Export the getIndex function. May be used by other modules. For example, the index routes module
 export { getUser };
 
-import { PrismaClient, Prisma } from "@prisma/client";
+import { PrismaClient, Prisma} from "@prisma/client";
 
 //Create a new Instance of PrismaClient
 const prisma = new PrismaClient();

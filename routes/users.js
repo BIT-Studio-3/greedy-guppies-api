@@ -1,5 +1,4 @@
 import express from "express";
-
 import {
   createUser,
   findUsers,
@@ -10,7 +9,40 @@ import {
 
 const router = express.Router();
 
-
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     User:
+ *       type: object
+ *       properties:
+ *         id:
+ *           type: string
+ *           format: uuid
+ *           description: The unique identifier for the user
+ *         firstName:
+ *           type: string
+ *           description: The user's first name
+ *         lastName:
+ *           type: string
+ *           description: The user's last name
+ *         email:
+ *           type: string
+ *           format: email
+ *           description: The user's email address
+ *         phoneNumber:
+ *           type: integer
+ *           description: The user's phone number
+ *         password:
+ *           type: string
+ *           description: The user's password
+ *       required:
+ *         - firstName
+ *         - lastName
+ *         - email
+ *         - phoneNumber
+ *         - password
+ */
 
 /**
  * @swagger
@@ -24,7 +56,7 @@ const router = express.Router();
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/user'
+ *             $ref: '#/components/schemas/User'
  *     responses:
  *       '201':
  *         description: User successfully created
@@ -37,11 +69,9 @@ const router = express.Router();
  *                   type: string
  *                   example: "User successfully created"
  *                 data:
- *                   type: array
- *                   items:
- *                     $ref: '#/components/schemas/user'
+ *                   $ref: '#/components/schemas/User'
  *       '400':
- *         description: User with the same name already exists
+ *         description: User with the same email or phone number already exists
  *         content:
  *           application/json:
  *             schema:
@@ -49,7 +79,7 @@ const router = express.Router();
  *               properties:
  *                 message:
  *                   type: string
- *                   example: "User with the same name already exists"
+ *                   example: "User with the same email or phone number already exists"
  *       '500':
  *         description: Internal server error
  *         content:
@@ -60,8 +90,10 @@ const router = express.Router();
  *                 message:
  *                   type: string
  *                   example: "An unexpected error occurred"
-*/
+ */
+
 router.post("/", createUser);
+
 /**
  * @swagger
  * /api/users:
@@ -80,7 +112,7 @@ router.post("/", createUser);
  *                 data:
  *                   type: array
  *                   items:
- *                     $ref: '#/components/schemas/user'
+ *                     $ref: '#/components/schemas/User'
  *       '404':
  *         description: No users found
  *         content:
@@ -101,13 +133,14 @@ router.post("/", createUser);
  *                 message:
  *                   type: string
  *                   example: "An unexpected error occurred"
-*/
+ */
 router.get("/", findUsers);
+
 /**
  * @swagger
  * /api/users/{id}:
  *   get:
- *     summary: Get an user by id
+ *     summary: Get a user by ID
  *     tags:
  *       - User
  *     parameters:
@@ -116,16 +149,17 @@ router.get("/", findUsers);
  *         required: true
  *         schema:
  *           type: string
- *         description: The user id
+ *           format: uuid
+ *         description: The user ID
  *     responses:
  *       '200':
  *         description: Success
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/user'
+ *               $ref: '#/components/schemas/User'
  *       '404':
- *         description: No user found with the provided id
+ *         description: No user found with the provided ID
  *         content:
  *           application/json:
  *             schema:
@@ -133,7 +167,7 @@ router.get("/", findUsers);
  *               properties:
  *                 message:
  *                   type: string
- *                   example: "No user with the id: {id} found"
+ *                   example: "No user with the ID: {id} found"
  *       '500':
  *         description: Internal server error
  *         content:
@@ -146,11 +180,12 @@ router.get("/", findUsers);
  *                   example: "An unexpected error occurred"
  */
 router.get("/:id", findUser);
+
 /**
  * @swagger
  * /api/users/{id}:
  *   put:
- *     summary: Update an user by id
+ *     summary: Update a user by ID
  *     tags:
  *       - User
  *     parameters:
@@ -159,13 +194,14 @@ router.get("/:id", findUser);
  *         required: true
  *         schema:
  *           type: string
- *         description: The user id
+ *           format: uuid
+ *         description: The user ID
  *     requestBody:
  *       required: true
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/users'
+ *             $ref: '#/components/schemas/User'
  *     responses:
  *       '200':
  *         description: User successfully updated
@@ -176,11 +212,11 @@ router.get("/:id", findUser);
  *               properties:
  *                 message:
  *                   type: string
- *                   example: "User with the id: {id} successfully updated"
+ *                   example: "User with the ID: {id} successfully updated"
  *                 data:
- *                   $ref: '#/components/schemas/users'
+ *                   $ref: '#/components/schemas/User'
  *       '404':
- *         description: No user found with the provided id
+ *         description: No user found with the provided ID
  *         content:
  *           application/json:
  *             schema:
@@ -188,7 +224,7 @@ router.get("/:id", findUser);
  *               properties:
  *                 message:
  *                   type: string
- *                   example: "No user with the id: {id} found"
+ *                   example: "No user with the ID: {id} found"
  *       '500':
  *         description: Internal server error
  *         content:
@@ -201,11 +237,12 @@ router.get("/:id", findUser);
  *                   example: "An unexpected error occurred"
  */
 router.put("/:id", updateUser);
+
 /**
  * @swagger
  * /api/users/{id}:
  *   delete:
- *     summary: Delete a user by id
+ *     summary: Delete a user by ID
  *     tags:
  *       - User
  *     parameters:
@@ -214,7 +251,8 @@ router.put("/:id", updateUser);
  *         required: true
  *         schema:
  *           type: string
- *         description: The user id
+ *           format: uuid
+ *         description: The user ID
  *     responses:
  *       '200':
  *         description: User successfully deleted
@@ -225,9 +263,9 @@ router.put("/:id", updateUser);
  *               properties:
  *                 message:
  *                   type: string
- *                   example: "User with the id: {id} successfully deleted"
+ *                   example: "User with the ID: {id} successfully deleted"
  *       '404':
- *         description: No user found with the provided id
+ *         description: No user found with the provided ID
  *         content:
  *           application/json:
  *             schema:
@@ -235,7 +273,7 @@ router.put("/:id", updateUser);
  *               properties:
  *                 message:
  *                   type: string
- *                   example: "No user with the id: {id} found"
+ *                   example: "No user with the ID: {id} found"
  *       '500':
  *         description: Internal server error
  *         content:
