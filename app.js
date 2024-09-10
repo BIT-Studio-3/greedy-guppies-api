@@ -2,6 +2,9 @@
 import express from "express";
 import swaggerJSDoc from "swagger-jsdoc";
 import swaggerUi from "swagger-ui-express";
+import { isContentTypeApplicationJSON } from "./middleware/utils.js";
+import authRouteMiddleware from "./middleware/authRoute.js";
+import authRoutes from "./routes/auth.js";
 
 // Import the index routes module
 import indexRoutes from "./routes/index.js";
@@ -42,9 +45,11 @@ const swaggerOptions = {
   
   // This should be declared under const swaggerOptions = { ... };
 const swaggerDocs = swaggerJSDoc(swaggerOptions);
-app.use("/api/users", usersRoutes);
+app.use(isContentTypeApplicationJSON);
+app.use("/api/users", authRouteMiddleware, usersRoutes);
 // This should be declared under app.use("/api/institutions", institutionRoutes);
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+app.use("/api/auth", authRoutes);
 
 // Start the server on port 3000
 app.listen(PORT, () => {
