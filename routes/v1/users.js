@@ -5,7 +5,12 @@ import {
   findUser,
   updateUser,
   deleteUser,
-} from "../controllers/users.js";
+} from "../../controllers/v1/users.js";
+
+import {
+  validatePostUser,
+  validatePutUser,
+} from "../../middleware/validation.js";
 
 const router = express.Router();
 
