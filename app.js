@@ -13,7 +13,7 @@ const app = express();
 
 // Configure CORS to allow requests from your frontend
 const corsOptions = {
-  origin: ['https://s-m-l-l.netlify.app', 'https://s-m-l-l-webservice.onrender.com'],  // Include https://
+  origin: ['https://main--greedyguppies.netlify.app/', 'https://greedy-guppies-api-q5jp.onrender.com'],  // Include https://
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization'],
 };
