@@ -1,58 +1,69 @@
-// Import the Express module
-import express from "express";
-import swaggerJSDoc from "swagger-jsdoc";
-import swaggerUi from "swagger-ui-express";
+import express from 'express';
+import swaggerJSDoc from 'swagger-jsdoc';
+import swaggerUi from 'swagger-ui-express';
+import userRoutes from './routes/v1/user.js';
+import authRoutes from './routes/v1/authRoutes.js';
+import cors from 'cors';
+import dotenv from 'dotenv';
 
-// Import the index routes module
-import indexRoutes from "./routes/v1/index.js";
-import usersRoutes from "./routes/v1/users.js";
-import departmentRoutes from "./routes/v1/department.js";
+dotenv.config();
 
 // Create an Express application
 const app = express();
 
+// Configure CORS to allow requests from your frontend
+const corsOptions = {
+  origin: ['https://s-m-l-l.netlify.app', 'https://s-m-l-l-webservice.onrender.com'],  // Include https://
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+};
+
+
+app.use(cors(corsOptions));
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
+
 // Use the PORT environment variable or 3000
 const PORT = process.env.PORT || 3000;
 
-// Use the routes module
-app.use("/", indexRoutes);
-app.use(express.urlencoded({ extended: false })); // To parse the incoming requests with urlencoded payloads. For example, form data
-
-// This should be declared under app.use(urlencoded({ extended: false }));
-app.use(express.json()); // To parse the incoming requests with JSON payloads. For example, REST API requests
-// This should be declared under app.use(express.json());
+// Swagger options
 const swaggerOptions = {
   definition: {
-    openapi: "3.0.0",
+    openapi: '3.0.0',
     info: {
-      title: "User Management System API",
-      version: "0.0.1",
-      description: "A User Management System API",
+      title: 'Student Management System API',
+      version: '1.0.0',
+      description: 'A student management system API',
       contact: {
-        name: "Greedy Guppies",
+        name: 'l',
       },
     },
     servers: [
       {
-        url: "http://localhost:3000",
+        url: 'https://greedy-guppies-api-q5jp.onrender.com',
       },
     ],
   },
-  apis: ["./routes/v1/*.js"],
+  apis: ['./routes/v1/*.js'],
 };
 
-// This should be declared under const swaggerOptions = { ... };
+// Initialize swagger-jsdoc
 const swaggerDocs = swaggerJSDoc(swaggerOptions);
-app.use("/api/v1/users", usersRoutes);
-app.use("/api/v1/departments", departmentRoutes);
-// This should be declared under app.use("/api/institutions", institutionRoutes);
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+
+// Use the routes module
+app.use('/api/users', userRoutes);
+app.use('/auth', authRoutes);
+
+// Setup swagger-ui after swaggerDocs is initialized
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+
+app.get('/api/users', function (_req, res) {
+  res.json({ msg: 'This is CORS-enabled for all origins!' });
+});
 
 // Start the server on port 3000
 app.listen(PORT, () => {
-  console.log(
-    `Server is listening on port ${PORT}. Visit http://localhost:${PORT}`,
-  );
+  console.log(`Server is listening on port ${PORT}. Visit http://localhost:${PORT}/api-docs`);
 });
 
 // Export the Express application. May be used by other modules. For example, API testing

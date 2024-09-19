@@ -1,89 +1,73 @@
 import Joi from "joi";
+import STATUS_CODES from "../utils/statusCode.js";
 
-const validatePostUser = (req, res, next) => {
   const userSchema = Joi.object({
-    firstName: Joi.string().min(3).max(100).required().messages({
-      "string.base": "name should be a string",
-      "string.empty": "name cannot be empty",
-      "string.min": "name should have a minimum length of {#limit}",
-      "string.max": "name should have a maximum length of {#limit}",
-      "any.required": "name is required",
+    name: Joi.string().min(0).max(20).required().messages({
+      "string.base": "firstName should be a string",
+      "string.empty": "firstName cannot be empty",
+      "string.min": "firstName should have a minimum length of {#limit}",
+      "string.max": "firstName should have a maximum length of {#limit}",
+      "any.required": "firstName is required",
     }),
-    lastName: Joi.string().min(3).max(100).required().messages({
-        "string.base": "name should be a string",
-        "string.empty": "name cannot be empty",
-        "string.min": "name should have a minimum length of {#limit}",
-        "string.max": "name should have a maximum length of {#limit}",
-        "any.required": "name is required",
+    // lastName: Joi.string().min(0).max(20).required().messages({
+    //   "string.base": "lastName should be a string",
+    //   "string.empty": "lastName cannot be empty",
+    //   "string.min": "lastName should have a minimum length of {#limit}",
+    //   "string.max": "lastName should have a maximum length of {#limit}",
+    //   "any.required": "lastName is required",
+    // }),
+    
+    email: Joi.string()
+      .required()
+      .messages({
+        "string.base": "email should be a string",
+        "string.empty": "email cannot be empty",
+        "string.min": "email should have a minimum length of {#limit}",
+        "string.max": "email should have a maximum length of {#limit}",
+        "any.required": "email is required",
+        "string.email": "",
       }),
-    email: Joi.string().min(3).max(100).required().messages({
-      "string.base": "region should be a string",
-      "string.empty": "region cannot be empty",
-      "string.min": "region should have a minimum length of {#limit}",
-      "string.max": "region should have a maximum length of {#limit}",
-      "any.required": "region is required",
+    password: Joi.string().min(8).max(20).required().messages({
+      "string.base": "password should be a string",
+      "string.empty": "password cannot be empty",
+      "string.min": "password should have a minimum length of {#limit}",
+      "string.max": "password should have a maximum length of {#limit}",
+      "any.required": "password is required",
     }),
-    password: Joi.string().min(3).max(100).required().messages({
-      "string.base": "country should be a string",
-      "string.empty": "country cannot be empty",
-      "string.min": "country should have a minimum length of {#limit}",
-      "string.max": "country should have a maximum length of {#limit}",
-      "any.required": "country is required",
-    }),
+    // date: Joi.string().min(2).max(4).required().messages({
+    //   "string.base": "date should be a string",
+    //   "string.empty": "date cannot be empty",
+    //   "string.min": "date should have a minimum length of {#limit}",
+    //   "string.max": "date should have a maximum length of {#limit}",
+    //   "any.required": "date is required",
+    // }),
   });
 
-  const { error } = institutionSchema.validate(req.body);
 
-  if (error) {
-    return res.status(409).json({
-      msg: error.details[0].message,
-    });
-  }
 
-  next();
-};
 
-const validatePutUser = (req, res, next) => {
-  const userSchema = Joi.object({
-    firstName: Joi.string().min(3).max(100).required().messages({
-        "string.base": "name should be a string",
-        "string.empty": "name cannot be empty",
-        "string.min": "name should have a minimum length of {#limit}",
-        "string.max": "name should have a maximum length of {#limit}",
-        "any.required": "name is required",
-      }),
-      lastName: Joi.string().min(3).max(100).required().messages({
-          "string.base": "name should be a string",
-          "string.empty": "name cannot be empty",
-          "string.min": "name should have a minimum length of {#limit}",
-          "string.max": "name should have a maximum length of {#limit}",
-          "any.required": "name is required",
-        }),
-      email: Joi.string().min(3).max(100).required().messages({
-        "string.base": "region should be a string",
-        "string.empty": "region cannot be empty",
-        "string.min": "region should have a minimum length of {#limit}",
-        "string.max": "region should have a maximum length of {#limit}",
-        "any.required": "region is required",
-      }),
-      password: Joi.string().min(3).max(100).required().messages({
-        "string.base": "country should be a string",
-        "string.empty": "country cannot be empty",
-        "string.min": "country should have a minimum length of {#limit}",
-        "string.max": "country should have a maximum length of {#limit}",
-        "any.required": "country is required",
-      }),
-  }).min(1); // Ensure at least one field is being updated
+  const validateSchema = (schema, isRequired = false) => {
+    return (req, res, next) => {
+      const { error } = isRequired
+        ? schema.required().validate(req.body)
+        : schema.validate(req.body);
+  
+      if (error) {
+        return res.status(STATUS_CODES.BAD_REQUEST).json({
+          msg: error.details[0].message,
+        });
+      }
+  
+      next();
+    };
+  };
+  
+  const validatePostUser = validateSchema(userSchema, true);
+  const validatePutUser = validateSchema(userSchema);
 
-  const { error } = institutionSchema.validate(req.body);
-
-  if (error) {
-    return res.status(409).json({
-      msg: error.details[0].message,
-    });
-  }
-
-  next();
-};
-
-export { validatePostUser, validatePutUser };
+  
+  export {
+    validatePostUser,
+    validatePutUser,
+  };
+  
