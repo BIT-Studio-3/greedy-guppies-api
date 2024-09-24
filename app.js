@@ -13,7 +13,7 @@ const app = express();
 
 // Configure CORS to allow requests from your frontend
 const corsOptions = {
-  origin: ['https://main--greedyguppies.netlify.app/', 'https://greedy-guppies-api-q5jp.onrender.com'],  // Include https://
+  origin: ['https://main--greedyguppies.netlify.app/', 'https://greedy-guppies-api-ozm3.onrender.com', 'http://localhost:3000' , 'http://localhost:5173'],  // Include https://
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization'],
 };
@@ -40,7 +40,7 @@ const swaggerOptions = {
     },
     servers: [
       {
-        url: 'https://greedy-guppies-api-q5jp.onrender.com',
+        url: 'https://greedy-guppies-api-ozm3.onrender.com', 
       },
     ],
   },
