@@ -47,6 +47,13 @@ export default userRouter;
  *         password:
  *           type: string
  *           example: "password123"
+ *   securitySchemes:
+ *      BearerAuth:
+ *       type:http
+ *       scheme:bearer
+ *       bearerFormat: JWT
+ *   security:
+ *      - BearerAuth: []
  */
 
 /**
@@ -56,6 +63,8 @@ export default userRouter;
  *     summary: Create a new User
  *     tags:
  *       - User
+ *     security:
+ *       - BearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -104,6 +113,8 @@ export default userRouter;
  *     summary: Get all users
  *     tags:
  *       - User
+ *     security:
+ *       - BearerAuth: []
  *     responses:
  *       '200':
  *         description: Success
@@ -145,6 +156,8 @@ export default userRouter;
  *     summary: Get a user by id
  *     tags:
  *       - User
+ *     security:
+ *       - BearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -181,7 +194,6 @@ export default userRouter;
  *                   example: "An unexpected error occurred"
  */
 
-
 /**
  * @swagger
  * /api/users/email/{email}:
@@ -189,6 +201,8 @@ export default userRouter;
  *     summary: Get a user by email
  *     tags:
  *       - User
+ *     security:
+ *       - BearerAuth: []
  *     parameters:
  *       - in: path
  *         name: email
@@ -225,8 +239,6 @@ export default userRouter;
  *                   example: "An unexpected error occurred"
  */
 
-
-
 /**
  * @swagger
  * /api/users/{id}:
@@ -234,6 +246,8 @@ export default userRouter;
  *     summary: Update a user by id
  *     tags:
  *       - User
+ *     security:
+ *       - BearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -289,6 +303,8 @@ export default userRouter;
  *     summary: Delete a user by id
  *     tags:
  *       - User
+ *     security:
+ *       - BearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id

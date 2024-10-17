@@ -5,6 +5,7 @@ import userRoutes from './routes/v1/user.js';
 import authRoutes from './routes/v1/authRoutes.js';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import authMiddle from './middleware/authMiddleware.js';
 
 const service = process.env.NODE_ENV === "production" ? "https://greedy-guppies-api-ozm3.onrender.com" : 'http://localhost:3000';
 
