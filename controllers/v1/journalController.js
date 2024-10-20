@@ -1,4 +1,4 @@
-const prisma = require('../../prisma/prisma.js'); // Import Prisma for DB access
+import prisma from '../../prisma/prisma.js'; // Import Prisma for DB access
 
 // Fetch journal entries for the authenticated user
 const getJournalEntries = async (req, res) => {

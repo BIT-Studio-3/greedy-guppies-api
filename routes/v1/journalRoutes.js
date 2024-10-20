@@ -1,6 +1,7 @@
-const express = require('express');
-const { getJournalEntries, addJournalEntry } = require('../../controllers/v1/journalController');
-const { authenticateToken } = require('../../middleware/authMiddleware'); // Assuming you have auth middleware
+import express from "express"
+
+import { getJournalEntries, addJournalEntry }  from '../../controllers/v1/journalController';
+import { authenticateToken }  from '../../middleware/authMiddleware';
 
 const router = express.Router();
 
@@ -10,4 +11,4 @@ router.get('/getall', authenticateToken, getJournalEntries);
 // Add a new drink to the journal
 router.post('/add', authenticateToken, addJournalEntry);
 
-module.exports = router;
+export default router;

@@ -15,14 +15,14 @@ model User {
   name          String
   email         String      @unique
   password      String
+  journal       JournalEntry[]
 }
 
 model JournalEntry {
-  id        Int      @id @default(autoincrement())
-  userId    Int
-  user      User     @relation(fields: [userId], references: [id])
+  id        String   @id @default(uuid())
   drinkId   String
-  timestamp DateTime @default(now())
-
-  @@index([userId], name: "userId_idx")
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  timeDrunk DateTime @default(now())
+  createdAt DateTime @default(now())
 }
