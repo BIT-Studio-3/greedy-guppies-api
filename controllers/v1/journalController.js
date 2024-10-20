@@ -38,7 +38,6 @@ const addJournalEntry = async (req, res) => {
   }
 };
 
-module.exports = {
-  getJournalEntries,
-  addJournalEntry
-};
+
+   export { getJournalEntries, addJournalEntry };
+

@@ -1,6 +1,6 @@
 import express from "express"
 
-import { getJournalEntries, addJournalEntry }  from '../../controllers/v1/journalController';
+import { addJournalEntry, getJournalEntries } from "../../controllers/v1/journalController";
 import { authenticateToken }  from '../../middleware/authMiddleware';
 
 const router = express.Router();
