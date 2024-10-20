@@ -20,14 +20,13 @@ const getJournalEntries = async (req, res) => {
 // Add a new journal entry
 const addJournalEntry = async (req, res) => {
   try {
-    const userId = req.user.id;
-    const { drinkId } = req.body;
+    const { userId, drinkId } = req.body;
 
     const newEntry = await prisma.journalEntry.create({
       data: {
         userId,
         drinkId,
-        timestamp: new Date(), // Save the timestamp when added
+        timeDrunk: new Date(), // Save the timestamp when added
       }
     });
 
