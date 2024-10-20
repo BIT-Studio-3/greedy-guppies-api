@@ -48,13 +48,14 @@ export default userRouter;
  *           type: string
  *           example: "password123"
  *   securitySchemes:
- *      BearerAuth:
- *       type:http
- *       scheme:bearer
+ *     BearerAuth:
+ *       type: http
+ *       scheme: bearer
  *       bearerFormat: JWT
- *   security:
- *      - BearerAuth: []
+ * security:
+ *   - BearerAuth: []
  */
+
 
 /**
  * @swagger
