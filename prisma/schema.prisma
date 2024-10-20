@@ -16,3 +16,13 @@ model User {
   email         String      @unique
   password      String
 }
+
+model JournalEntry {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  user      User     @relation(fields: [userId], references: [id])
+  drinkId   String
+  timestamp DateTime @default(now())
+
+  @@index([userId], name: "userId_idx")
+}

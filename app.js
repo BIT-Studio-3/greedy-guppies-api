@@ -11,6 +11,7 @@ const service = process.env.NODE_ENV === "production" ? "https://greedy-guppies-
 
 dotenv.config();
 
+const journalRoutes = require('./routes/v1/journalRoutes'); // Import the journal routes
 // Create an Express application
 const app = express();
 
@@ -56,6 +57,7 @@ const swaggerDocs = swaggerJSDoc(swaggerOptions);
 // Use the routes module
 app.use('/api/users', userRoutes);
 app.use('/auth', authRoutes);
+app.use('/api/v1', journalRoutes); 
 
 // Setup swagger-ui after swaggerDocs is initialized
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
