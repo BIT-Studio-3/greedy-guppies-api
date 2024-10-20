@@ -4,10 +4,10 @@ const { authenticateToken } = require('../../middleware/authMiddleware'); // Ass
 
 const router = express.Router();
 
-// GET /journal - Fetch journal entries for the authenticated user
-router.get('/journal', authenticateToken, getJournalEntries);
+// Fetch journal entries for the authenticated user
+router.get('/getall', authenticateToken, getJournalEntries);
 
-// POST /journal - Add a new drink to the journal
-router.post('/journal', authenticateToken, addJournalEntry);
+// Add a new drink to the journal
+router.post('/add', authenticateToken, addJournalEntry);
 
 module.exports = router;

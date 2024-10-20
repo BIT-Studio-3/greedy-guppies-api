@@ -3,6 +3,7 @@ import swaggerJSDoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
 import userRoutes from './routes/v1/user.js';
 import authRoutes from './routes/v1/authRoutes.js';
+import journalRoutes from './routes/v1/journalRoutes.js';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import authMiddle from './middleware/authMiddleware.js';
@@ -11,7 +12,7 @@ const service = process.env.NODE_ENV === "production" ? "https://greedy-guppies-
 
 dotenv.config();
 
-const journalRoutes = require('./routes/v1/journalRoutes'); // Import the journal routes
+
 // Create an Express application
 const app = express();
 
@@ -57,7 +58,7 @@ const swaggerDocs = swaggerJSDoc(swaggerOptions);
 // Use the routes module
 app.use('/api/users', userRoutes);
 app.use('/auth', authRoutes);
-app.use('/api/v1', journalRoutes); 
+app.use('/api/v1/journal', journalRoutes);
 
 // Setup swagger-ui after swaggerDocs is initialized
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));

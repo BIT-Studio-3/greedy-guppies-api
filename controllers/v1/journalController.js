@@ -17,7 +17,7 @@ const getJournalEntries = async (req, res) => {
   }
 };
 
-// POST /journal - Add a new journal entry
+// Add a new journal entry
 const addJournalEntry = async (req, res) => {
   try {
     const userId = req.user.id;
