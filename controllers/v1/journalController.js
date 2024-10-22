@@ -7,10 +7,11 @@ const getJournalEntries = async (req, res) => {
 
     const journalEntries = await prisma.journalEntry.findMany({
       where: { userId },
-      include: { drink: true } // Assuming "drink" is a related model (if using Prisma relationships)
+      include: { user: true } // Includes user when fetching drinks
     });
-
+    console.log(journalEntries);
     res.status(200).json({ journalEntries });
+
   } catch (error) {
     console.error('Error fetching journal entries:', error);
     res.status(500).json({ message: 'Error fetching journal entries' });
