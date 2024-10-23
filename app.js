@@ -3,6 +3,7 @@ import swaggerJSDoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
 import userRoutes from './routes/v1/user.js';
 import authRoutes from './routes/v1/authRoutes.js';
+import journalRoutes from './routes/v1/journalRoutes.js';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import authMiddle from './middleware/authMiddleware.js';
@@ -10,6 +11,7 @@ import authMiddle from './middleware/authMiddleware.js';
 const service = process.env.NODE_ENV === "production" ? "https://greedy-guppies-api-ozm3.onrender.com" : 'http://localhost:3000';
 
 dotenv.config();
+
 
 // Create an Express application
 const app = express();
@@ -54,8 +56,9 @@ const swaggerOptions = {
 const swaggerDocs = swaggerJSDoc(swaggerOptions);
 
 // Use the routes module
-app.use('/api/users', userRoutes);
+app.use('/api/v1/users', userRoutes);
 app.use('/auth', authRoutes);
+app.use('/api/v1/journal', journalRoutes);
 
 // Setup swagger-ui after swaggerDocs is initialized
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
