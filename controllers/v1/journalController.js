@@ -7,7 +7,14 @@ const getJournalEntries = async (req, res) => {
 
     const journalEntries = await prisma.journalEntry.findMany({
       where: { userId },
-      include: { user: true } // Includes user when fetching drinks
+      select: {
+        id: true,
+        drinkId: true,
+        timeDrunk: true,
+        createdAt: true,
+        // Avoid including user-related fields by not selecting them
+      }
+      
     });
     console.log(journalEntries);
     res.status(200).json({ journalEntries });
