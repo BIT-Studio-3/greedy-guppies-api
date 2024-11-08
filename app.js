@@ -8,7 +8,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import authMiddle from './middleware/authMiddleware.js';
 
-const service = process.env.NODE_ENV === "production" ? "https://greedy-guppies-api-ozm3.onrender.com" : 'http://localhost:3000';
+const service = process.env.NODE_ENV === "production" ? "https://greedy-guppies-api-3u7k.onrender.com" : 'http://localhost:3000';
 
 dotenv.config();
 
@@ -18,7 +18,7 @@ const app = express();
 
 // Configure CORS to allow requests from your frontend
 const corsOptions = {
-   origin: ['https://main--greedyguppies.netlify.app/', 'https://greedy-guppies-api-ozm3.onrender.com', 'http://localhost:3000' , 'http://localhost:5173'],  // Include https://
+   origin: ['https://main--greedyguppies.netlify.app/', 'https://greedy-guppies-api-3u7k.onrender.com', 'http://localhost:3000' , 'http://localhost:5173'],  // Include https://
    methods: ['GET', 'POST', 'PUT', 'DELETE'],
    allowedHeaders: ['Content-Type', 'Authorization'],
 };
