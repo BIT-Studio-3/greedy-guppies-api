@@ -8,9 +8,11 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import authMiddle from './middleware/authMiddleware.js';
 
-const service = process.env.NODE_ENV === "production" ? "https://greedy-guppies-api-3u7k.onrender.com" : 'http://localhost:3000';
-
 dotenv.config();
+
+const service = process.env.NODE_ENV === "production" 
+  ? "https://greedy-guppies-api-3u7k.onrender.com" 
+  : 'http://localhost:3000';
 
 
 // Create an Express application
@@ -18,9 +20,15 @@ const app = express();
 
 // Configure CORS to allow requests from your frontend
 const corsOptions = {
-   origin: ['https://main--greedyguppies.netlify.app/', 'https://greedy-guppies-api-3u7k.onrender.com', 'http://localhost:3000' , 'http://localhost:5173'],  // Include https://
+   origin: [
+    'https://main--greedyguppies.netlify.app', 
+    'https://greedy-guppies-api-3u7k.onrender.com', 
+    'http://localhost:3000' , 
+    'http://localhost:5173'
+  ],  // Include https://
    methods: ['GET', 'POST', 'PUT', 'DELETE'],
    allowedHeaders: ['Content-Type', 'Authorization'],
+   credentials: true
 };
 
 
@@ -45,8 +53,13 @@ const swaggerOptions = {
     },
     servers: [
       {
-        url: service, 
+        url: 'https://greedy-guppies-api-3u7k.onrender.com',
+        description: 'Production server'
       },
+      {
+        url: 'http://localhost:3000',
+        description: 'Development server'
+      }
     ],
   },
   apis: ['./routes/v1/*.js'],
